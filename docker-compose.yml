@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile
     volumes:
-      - "./app/:/app/"
+      - "./src/:/app/"
       - "/app/node_modules"
     ports:
       - "3000:3000"
