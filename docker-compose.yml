@@ -13,5 +13,4 @@ services:
 
 volumes:
   node_modules:
-    name: univ_news
     driver: local
