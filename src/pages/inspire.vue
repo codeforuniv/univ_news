@@ -10,20 +10,20 @@
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </v-card-title>
-          <v-virtual-scroll :items="items" :item-height="60" height="500">
+          <v-virtual-scroll :items="posts" :item-height="60" height="500">
             <template v-slot="{ item }">
               <v-divider></v-divider>
               <v-list-item>
                 <v-col cols="2">
                   <v-list-item-content>
-                    <v-list-item-title>{{
-                      item.date | formatDate
-                    }}</v-list-item-title>
+                    <v-list-item-title>
+                      {{ item.date | formatDate }}
+                    </v-list-item-title>
                   </v-list-item-content>
                 </v-col>
                 <v-col cols="2">
                   <v-list-item-content>
-                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <v-list-item-title>{{ item.univ_name }}</v-list-item-title>
                   </v-list-item-content>
                 </v-col>
                 <v-col cols="6">
@@ -34,9 +34,9 @@
                 <v-list-item-action>
                   <v-btn depressed small :href="item.url" target="_blank">
                     公式HPへ
-                    <v-icon color="orange darken-4" right>
-                      mdi-open-in-new
-                    </v-icon>
+                    <v-icon color="orange darken-4" right
+                      >mdi-open-in-new</v-icon
+                    >
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
@@ -49,30 +49,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  data() {
-    return {
-      items: [
-        {
-          name: '東京大学',
-          title: 'ニュース1',
-          url: 'https://www.u-tokyo.ac.jp/',
-          date: new Date()
-        },
-        {
-          name: '愛媛大学',
-          title: 'ニュース2',
-          url: 'https://www.ehime-u.ac.jp/',
-          date: new Date()
-        },
-        {
-          name: '愛媛大学',
-          title: 'ニュース2',
-          url: 'https://www.ehime-u.ac.jp/',
-          date: new Date()
-        }
-      ]
-    }
+  async fetch({ store }) {
+    await Promise.all([store.dispatch('news/FETCH_NEWS')])
+  },
+  computed: {
+    ...mapState('news', ['posts'])
   }
 }
 </script>

@@ -30,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment.js'],
+  plugins: ['~/plugins/firebase.js', '~/plugins/moment.js'],
   /*
    ** Nuxt.js dev-modules
    */
