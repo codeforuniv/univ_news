@@ -11,15 +11,23 @@
       >
         <template v-slot:item.img="{ item }">
           <v-img
+            v-if="$vuetify.breakpoint.xs"
+            :src="item.img"
+            :alt="item.name"
+            height="40"
+            width="150"
+          ></v-img>
+          <v-img
+            v-else
             :src="item.img"
             :alt="item.name"
             height="100"
             width="150"
           ></v-img>
         </template>
-        <template v-slot:item.date="{ item }">
-          {{ item.date | formatDate }}
-        </template>
+        <template v-slot:item.date="{ item }">{{
+          item.date | formatDate
+        }}</template>
         <template v-slot:item.url="{ item }">
           <v-btn depressed small :href="item.url" target="_blank">
             公式HPへ
