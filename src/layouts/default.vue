@@ -45,6 +45,11 @@ export default {
           icon: 'mdi-apps',
           title: 'Top News',
           to: '/'
+        },
+        {
+          icon: 'mdi-clipboard-text',
+          title: '対象大学',
+          to: '/info'
         }
       ],
       title: '大学ニュース'
