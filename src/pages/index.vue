@@ -1,75 +1,131 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a href="https://vuetifyjs.com" target="_blank"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">
-            Nuxt Documentation
-          </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
+  <v-container fluid>
+    <v-row no-gutters justify="center">
+      <v-data-table
+        :headers="headers"
+        :items="posts"
+        :items-per-page="100"
+        :search="search"
+        multi-sort
+        class="elevation-1"
+      >
+        <template v-slot:item.img="{ item }">
+          <v-img
+            :src="item.img"
+            :alt="item.name"
+            height="100"
+            width="150"
+          ></v-img>
+        </template>
+        <template v-slot:item.date="{ item }">
+          {{ item.date | formatDate }}
+        </template>
+        <template v-slot:item.url="{ item }">
+          <v-btn depressed small :href="item.url" target="_blank">
+            公式HPへ
+            <v-icon color="orange darken-4" right>mdi-open-in-new</v-icon>
           </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-flex>
-  </v-layout>
+        </template>
+      </v-data-table>
+
+      <!-- <v-col class="text-center">
+        <v-card class="mx-auto">
+          <v-card-title class="white--text orange darken-4">
+            最近のニュース
+            <v-spacer></v-spacer>
+            <v-btn color="white" class="text--primary" fab small>
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </v-card-title>
+          <v-virtual-scroll :items="posts" :item-height="100" height="1000">
+            <template v-slot="{ item }">
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-col cols="2">
+                  <v-list-item-content>
+                    <v-img :src="item.img" height="55"></v-img>
+                  </v-list-item-content>
+                </v-col>
+                <v-col cols="2">
+                  <v-list-item-content>
+                    <v-list-item-title>{{
+                      item.date | formatDate
+                    }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-col>
+                <v-col cols="2">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-col>
+                <v-col cols="5">
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+                </v-col>
+                <v-list-item-action>
+                  <v-btn depressed small :href="item.url" target="_blank">
+                    公式HPへ
+                    <v-icon color="orange darken-4" right
+                      >mdi-open-in-new</v-icon
+                    >
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </template>
+          </v-virtual-scroll>
+        </v-card>
+      </v-col> -->
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import { mapState } from 'vuex'
 
 export default {
-  components: {
-    Logo,
-    VuetifyLogo
+  async fetch({ store }) {
+    await Promise.all([store.dispatch('news/FETCH_NEWS')])
+  },
+  computed: {
+    ...mapState('news', ['posts'])
+  },
+  data() {
+    return {
+      search: '',
+      headers: [
+        {
+          sortable: false,
+          value: 'img',
+          width: '10%',
+          class: 'orange lighten-1'
+        },
+        {
+          text: '更新日時',
+          value: 'date',
+          width: '10%',
+          class: 'orange lighten-1'
+        },
+        {
+          text: '大学',
+          value: 'name',
+          width: '15%',
+          class: 'orange lighten-1'
+        },
+        {
+          text: 'タイトル',
+          value: 'title',
+          width: '50%',
+          class: 'orange lighten-1'
+        },
+        {
+          text: 'リンク',
+          value: 'url',
+          width: '15%',
+          class: 'orange lighten-1'
+        }
+      ]
+    }
   }
 }
 </script>
