@@ -1,40 +1,53 @@
 <template>
   <v-container fluid>
     <v-row no-gutters justify="center">
-      <v-data-table
-        :headers="headers"
-        :items="posts"
-        :items-per-page="100"
-        :search="search"
-        multi-sort
-        class="elevation-1"
-      >
-        <template v-slot:item.img="{ item }">
-          <v-img
-            v-if="$vuetify.breakpoint.xs"
-            :src="item.img"
-            :alt="item.name"
-            height="40"
-            width="150"
-          ></v-img>
-          <v-img
-            v-else
-            :src="item.img"
-            :alt="item.name"
-            height="100"
-            width="150"
-          ></v-img>
-        </template>
-        <template v-slot:item.date="{ item }">{{
-          item.date | formatDate
-        }}</template>
-        <template v-slot:item.url="{ item }">
-          <v-btn depressed small :href="item.url" target="_blank">
-            公式HPへ
-            <v-icon color="orange darken-4" right>mdi-open-in-new</v-icon>
-          </v-btn>
-        </template>
-      </v-data-table>
+      <v-card>
+        <v-card-title>
+          すべての大学ニュース
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="更新日時,大学,タイトルに含まれる文字列から検索"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="posts"
+          :items-per-page="100"
+          :search="search"
+          multi-sort
+          class="elevation-1"
+        >
+          <template v-slot:item.img="{ item }">
+            <v-img
+              v-if="$vuetify.breakpoint.xs"
+              :src="item.img"
+              :alt="item.name"
+              height="40"
+              width="150"
+            ></v-img>
+            <v-img
+              v-else
+              :src="item.img"
+              :alt="item.name"
+              height="100"
+              width="150"
+            ></v-img>
+          </template>
+          <template v-slot:item.date="{ item }">{{
+            item.date | formatDate
+          }}</template>
+          <template v-slot:item.url="{ item }">
+            <v-btn depressed small :href="item.url" target="_blank">
+              公式HPへ
+              <v-icon color="orange darken-4" right>mdi-open-in-new</v-icon>
+            </v-btn>
+          </template>
+        </v-data-table>
+      </v-card>
     </v-row>
   </v-container>
 </template>
@@ -52,6 +65,7 @@ export default {
       headers: [
         {
           sortable: false,
+          filterable: false,
           value: 'img',
           width: '10%',
           class: 'orange lighten-1'
@@ -75,6 +89,8 @@ export default {
           class: 'orange lighten-1'
         },
         {
+          sortable: false,
+          filterable: false,
           text: 'リンク',
           value: 'url',
           width: '15%',
