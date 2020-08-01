@@ -2,7 +2,8 @@ import firebase from '~/plugins/firebase'
 
 export const state = () => ({
   posts: [],
-  univs: []
+  univs: [],
+  covid19: []
 })
 
 export const mutations = {
