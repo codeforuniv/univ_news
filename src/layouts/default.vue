@@ -47,6 +47,11 @@ export default {
           to: '/'
         },
         {
+          icon: 'mdi-alert',
+          title: 'Covid19関連',
+          to: '/covid19'
+        },
+        {
           icon: 'mdi-clipboard-text',
           title: '対象大学',
           to: '/info'
