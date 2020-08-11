@@ -1,5 +1,22 @@
 <template>
   <v-container fluid>
+    <v-row class="align-center my-12" justify="center">
+      <v-col cols="12" md="6" class="text-center">
+        <h2>大学ニュース</h2>
+      </v-col>
+      <v-col cols="12" md="6" class="text-center">
+        意外にも大学内部の人は大学公式HPをあんまり見ない。
+        <br />大学の変革はコロナによるオンライン化だけじゃない。
+        <br />その大学側の取り組みをまずは知ってみよう。
+        <br />みんなが知らない意外なニュースが見つかるかもしれない。
+        <br />
+        <br />各大学のHPを1日1回クローリングしてニュースを表示しています。
+        <br />詳しくはリンク先の公式HPをご参照ください。
+      </v-col>
+    </v-row>
+
+    <v-divider />
+
     <v-row no-gutters justify="center">
       <v-card>
         <v-card-title>
@@ -37,9 +54,9 @@
               width="150"
             ></v-img>
           </template>
-          <template v-slot:item.date="{ item }">{{
-            item.date | formatDate
-          }}</template>
+          <template v-slot:item.date="{ item }">
+            {{ item.date | formatDate }}
+          </template>
           <template v-slot:item.url="{ item }">
             <v-btn depressed small :href="item.url" target="_blank">
               公式HPへ
